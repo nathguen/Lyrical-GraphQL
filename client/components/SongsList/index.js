@@ -1,15 +1,23 @@
 import React from "react";
 import { graphql } from "react-apollo";
 import { hashHistory, Link } from "react-router";
-import { fetchSongsQuery } from "../../queries";
+import { deleteSongMutation, fetchSongsQuery } from "../../queries";
 
 export const SongsList = (props) => {
   const {
     data: { songs, loading },
   } = props;
 
-  const goToSong = (songId) => {
-    hashHistory.push(`/songs/${songId}`);
+  /**
+   * Deletes a song
+   * @param {string} id
+   */
+  const deleteSong = (id) => {
+    props
+      .mutate({
+        variables: { id },
+      })
+      .then(() => props.data.refetch());
   };
 
   if (loading) {
@@ -21,12 +29,15 @@ export const SongsList = (props) => {
       <ul className="collection">
         {!!songs &&
           songs.map((song) => (
-            <li
-              onClick={() => goToSong(song.id)}
-              className="collection-item"
-              key={song.id}
-            >
-              {song.title}
+            <li className="collection-item" key={song.id}>
+              <Link to={`/songs/${song.id}`}>{song.title}</Link>
+
+              <i
+                className="material-icons right delete-song"
+                onClick={() => deleteSong(song.id)}
+              >
+                delete
+              </i>
             </li>
           ))}
       </ul>
@@ -39,4 +50,4 @@ export const SongsList = (props) => {
   );
 };
 
-export default graphql(fetchSongsQuery)(SongsList);
+export default graphql(deleteSongMutation)(graphql(fetchSongsQuery)(SongsList));
