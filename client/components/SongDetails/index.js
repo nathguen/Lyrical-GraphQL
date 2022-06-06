@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { graphql } from "react-apollo";
 import { Link } from "react-router";
 import { fetchSongQuery, fetchSongsQuery } from "../../queries";
-import { addLyricMutation } from "../../queries/addLyric";
 
 const SongDetails = (props) => {
   const {

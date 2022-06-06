@@ -12,3 +12,13 @@ export const addLyricMutation = gql`
     }
   }
 `;
+
+export const likeLyricMutation = gql`
+  mutation LikeLyric($id: ID) {
+    likeLyric(id: $id) {
+      id
+      content
+      likes
+    }
+  }
+`;

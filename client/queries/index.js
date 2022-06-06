@@ -1,3 +1,2 @@
-export * from "./deleteSong";
-export * from "./fetchSong";
-export * from "./fetchSongs";
+export * from "./lyric";
+export * from "./song";

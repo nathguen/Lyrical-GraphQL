@@ -46,11 +46,6 @@ export const SongsList = (props) => {
             </li>
           ))}
       </ul>
-
-      <Link to="/songs/new" className="btn-floating btn-large red right">
-        <i className="material-icons">add</i>
-        Create Song
-      </Link>
     </div>
   );
 };
