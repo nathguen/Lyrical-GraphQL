@@ -14,7 +14,7 @@ const App = () => {
       <div className="container">
         <Router history={hashHistory}>
           <Route path="/" component={SongsList} />
-          <Route path="/song/new" component={SongCreate} />
+          <Route path="/songs/new" component={SongCreate} />
         </Router>
       </div>
     </ApolloProvider>

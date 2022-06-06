@@ -1,17 +1,15 @@
 import React from "react";
-import gql from "graphql-tag";
 import { graphql } from "react-apollo";
-import { useRouterHistory } from "react-router";
+import { hashHistory, Link } from "react-router";
+import { fetchSongsQuery } from "../../queries";
 
 export const SongsList = (props) => {
-  const history = useRouterHistory();
-
   const {
     data: { songs, loading },
   } = props;
 
   const goToSong = (songId) => {
-    history.push(`/songs/${songId}`);
+    hashHistory.push(`/songs/${songId}`);
   };
 
   if (loading) {
@@ -19,28 +17,26 @@ export const SongsList = (props) => {
   }
 
   return (
-    <ul className="collection">
-      {!!songs &&
-        songs.map((song) => (
-          <li
-            onClick={() => goToSong(song.id)}
-            className="collection-item"
-            key={song.id}
-          >
-            {song.title}
-          </li>
-        ))}
-    </ul>
+    <div>
+      <ul className="collection">
+        {!!songs &&
+          songs.map((song) => (
+            <li
+              onClick={() => goToSong(song.id)}
+              className="collection-item"
+              key={song.id}
+            >
+              {song.title}
+            </li>
+          ))}
+      </ul>
+
+      <Link to="/songs/new" className="btn-floating btn-large red right">
+        <i className="material-icons">add</i>
+        Create Song
+      </Link>
+    </div>
   );
 };
 
-const query = gql`
-  {
-    songs {
-      id
-      title
-    }
-  }
-`;
-
-export default graphql(query)(SongsList);
+export default graphql(fetchSongsQuery)(SongsList);
