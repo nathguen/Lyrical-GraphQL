@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "react-apollo";
 import { hashHistory, Link } from "react-router";
 import { deleteSongMutation, fetchSongsQuery } from "../../queries";
+import SongCreate from "../SongCreate";
 
 export const SongsList = (props) => {
   const {
@@ -26,6 +27,10 @@ export const SongsList = (props) => {
 
   return (
     <div>
+      <h3>Lyric Creator</h3>
+
+      <SongCreate />
+
       <ul className="collection">
         {!!songs &&
           songs.map((song) => (
