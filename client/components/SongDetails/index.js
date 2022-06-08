@@ -31,20 +31,16 @@ const SongDetails = (props) => {
       return;
     }
 
+    setLyric("");
+
     props
       .mutate({
         variables: {
           songId: id,
           content: lyric,
         },
-        refetchQueries: [
-          {
-            query: fetchSongsQuery,
-          },
-        ],
       })
       .then(() => {
-        setLyric("");
         props.data.refetch();
       });
   };
