@@ -13,20 +13,18 @@ const SongCreate = (props) => {
       return;
     }
 
-    props
-      .mutate({
-        variables: {
-          title,
+    setTitle("");
+
+    props.mutate({
+      variables: {
+        title,
+      },
+      refetchQueries: [
+        {
+          query: fetchSongsQuery,
         },
-        refetchQueries: [
-          {
-            query: fetchSongsQuery,
-          },
-        ],
-      })
-      .then(() => {
-        setTitle("");
-      });
+      ],
+    });
   };
 
   return (
