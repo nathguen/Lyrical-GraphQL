@@ -22,3 +22,11 @@ export const likeLyricMutation = gql`
     }
   }
 `;
+
+export const deleteLyricMutation = gql`
+  mutation DeleteLyric($id: ID) {
+    deleteLyric(id: $id) {
+      id
+    }
+  }
+`;

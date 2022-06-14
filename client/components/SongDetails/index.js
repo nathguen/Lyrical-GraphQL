@@ -2,11 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { graphql } from "react-apollo";
 import { Link } from "react-router";
-import {
-  addLyricMutation,
-  fetchSongQuery,
-  likeLyricMutation,
-} from "../../queries";
+import { addLyricMutation, fetchSongQuery } from "../../queries";
+import DeleteLyric from "./delete-lyric";
 import Upvote from "./upvote";
 
 const SongDetails = (props) => {
@@ -97,6 +94,7 @@ const SongDetails = (props) => {
                 >
                   {lyric.likes}
                 </div>
+                <DeleteLyric id={lyric.id} songId={id} />
               </div>
             </li>
           ))}
