@@ -8,6 +8,7 @@ export const addLyricMutation = gql`
       lyrics {
         id
         content
+        likes
       }
     }
   }
@@ -17,7 +18,6 @@ export const likeLyricMutation = gql`
   mutation LikeLyric($id: ID) {
     likeLyric(id: $id) {
       id
-      content
       likes
     }
   }

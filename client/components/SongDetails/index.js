@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { graphql } from "react-apollo";
 import { Link } from "react-router";
 import {
   addLyricMutation,
   fetchSongQuery,
-  fetchSongsQuery,
+  likeLyricMutation,
 } from "../../queries";
+import Upvote from "./upvote";
 
 const SongDetails = (props) => {
   const {
@@ -33,16 +35,29 @@ const SongDetails = (props) => {
 
     setLyric("");
 
-    props
-      .mutate({
-        variables: {
-          songId: id,
-          content: lyric,
+    props.mutate({
+      variables: {
+        songId: id,
+        content: lyric,
+      },
+      optimisticResponse: {
+        addLyricToSong: {
+          __typename: "SongType",
+          id,
+          title,
+          lyrics: [
+            ...lyrics,
+
+            {
+              __typename: "LyricType",
+              id: `some-new-lyric-id--${lyrics.length + 1}`,
+              content: lyric,
+              likes: 0,
+            },
+          ],
         },
-      })
-      .then(() => {
-        props.data.refetch();
-      });
+      },
+    });
   };
 
   return (
@@ -67,6 +82,22 @@ const SongDetails = (props) => {
           {lyrics.map((lyric) => (
             <li key={lyric.id} className="collection-item">
               {lyric.content}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Upvote id={lyric.id} likes={lyric.likes} />
+                <div
+                  style={{
+                    minWidth: 40,
+                  }}
+                >
+                  {lyric.likes}
+                </div>
+              </div>
             </li>
           ))}
         </ul>
